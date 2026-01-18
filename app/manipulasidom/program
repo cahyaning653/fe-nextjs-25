@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas DOM Manipulation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-red {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-green {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .btn-blue {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        #itemList {
+            list-style: none;
+            padding: 0;
+        }
+
+        #itemList li {
+            background: white;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .counter-display {
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            color: #2c3e50;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            border: 3px solid #3498db;
+        }
+
+        .counter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-counter {
+            background-color: #34495e;
+            color: white;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-reset {
+            background-color: #95a5a6;
+            color: white;
+        }
+
+        #toggleText {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            border: 2px solid #3498db;
+            line-height: 1.6;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .btn-toggle {
+            background-color: #9b59b6;
+            color: white;
+        }
+
+        .btn-toggle:hover {
+            background-color: #8e44ad;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            .counter-display {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Tugas DOM Manipulation</h1>
+
+        <!-- Section 1: Dynamic List -->
+        <div class="section">
+            <h2>1. Dynamic List (Daftar Dinamis)</h2>
+            <div class="input-group">
+                <input type="text" id="itemInput" placeholder="Masukkan item baru...">
+                <button class="btn-primary" onclick="tambahItem()">Tambah Item</button>
+            </div>
+            <ul id="itemList"></ul>
+        </div>
+
+        <!-- Section 2: Ubah Warna Background -->
+        <div class="section">
+            <h2>2. Ubah Warna Background</h2>
+            <div class="btn-group">
+                <button class="btn-red" onclick="ubahWarna('red')">🔴 Merah</button>
+                <button class="btn-green" onclick="ubahWarna('green')">🟢 Hijau</button>
+                <button class="btn-blue" onclick="ubahWarna('blue')">🔵 Biru</button>
+                <button class="btn-primary" onclick="ubahWarna('#f5f5f5')">↩️ Reset</button>
+            </div>
+        </div>
+
+        <!-- Section 3: Counter -->
+        <div class="section">
+            <h2>3. Counter dengan DOM Manipulation</h2>
+            <div class="counter-display" id="counterDisplay">0</div>
+            <div class="counter-buttons">
+                <button class="btn-counter" onclick="tambahCounter()">+</button>
+                <button class="btn-counter" onclick="kurangiCounter()">-</button>
+                <button class="btn-reset" onclick="resetCounter()">Reset</button>
+            </div>
+        </div>
+
+        <!-- Section 4: Toggle Show/Hide -->
+        <div class="section">
+            <h2>4. Toggle Show/Hide Element</h2>
+            <button class="btn-toggle" onclick="toggleElement()">👁️ Tampilkan / Sembunyikan</button>
+            <p id="toggleText" class="hidden">
+                Ini adalah teks yang dapat ditampilkan atau disembunyikan menggunakan DOM Manipulation. 
+                Fitur ini menggunakan classList.toggle() untuk menambah atau menghapus class 'hidden' 
+                pada elemen paragraf ini. DOM (Document Object Model) adalah representasi struktur 
+                dokumen HTML yang memungkinkan JavaScript untuk memanipulasi konten, struktur, dan 
+                style dari halaman web secara dinamis.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // ========== SECTION 1: DYNAMIC LIST ==========
+        function tambahItem() {
+            const input = document.getElementById('itemInput');
+            const itemText = input.value.trim();
+            
+            if (itemText === '') {
+                alert('Silakan masukkan item terlebih dahulu!');
+                return;
+            }
+            
+            // Membuat elemen li baru
+            const li = document.createElement('li');
+            
+            // Membuat span untuk teks
+            const span = document.createElement('span');
+            span.textContent = itemText;
+            
+            // Membuat tombol hapus
+            const btnHapus = document.createElement('button');
+            btnHapus.textContent = 'Hapus';
+            btnHapus.className = 'btn-danger';
+            btnHapus.onclick = function() {
+                li.remove();
+            };
+            
+            // Menambahkan span dan button ke li
+            li.appendChild(span);
+            li.appendChild(btnHapus);
+            
+            // Menambahkan li ke ul
+            const ul = document.getElementById('itemList');
+            ul.appendChild(li);
+            
+            // Mengosongkan input
+            input.value = '';
+            input.focus();
+        }
+
+        // Event listener untuk Enter key
+        document.getElementById('itemInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                tambahItem();
+            }
+        });
+
+        // ========== SECTION 2: UBAH WARNA BACKGROUND ==========
+        function ubahWarna(warna) {
+            document.body.style.backgroundColor = warna;
+        }
+
+        // ========== SECTION 3: COUNTER ==========
+        let counter = 0;
+
+        function updateCounterDisplay() {
+            document.getElementById('counterDisplay').textContent = counter;
+        }
+
+        function tambahCounter() {
+            counter++;
+            updateCounterDisplay();
+        }
+
+        function kurangiCounter() {
+            counter--;
+            updateCounterDisplay();
+        }
+
+        function resetCounter() {
+            counter = 0;
+            updateCounterDisplay();
+        }
+
+        // ========== SECTION 4: TOGGLE SHOW/HIDE ==========
+        function toggleElement() {
+            const element = document.getElementById('toggleText');
+            element.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
